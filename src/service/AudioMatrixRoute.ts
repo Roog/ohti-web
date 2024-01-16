@@ -9,7 +9,7 @@ export class AudioMatrixRoute {
     public readonly inputs: number = 16;
     public readonly outputs: number = 16;
 
-    public onRouteChange? = (template: AudioTemplateRoute, route: AudioRoute) => void {};
+    public onRouteChange? = (template: AudioTemplateRoute, route: AudioRoute) => {};
 
     constructor() {
     }
@@ -35,7 +35,9 @@ export class AudioMatrixRoute {
         this.customized = true;
         this.templateRouteName = AudioTemplateRoute.custom;
         // TODO: check if matching any route
-        this.onRouteChange(this.templateRouteName, [...this.current]);
+        if (this.onRouteChange) {
+            this.onRouteChange(this.templateRouteName, [...this.current]);
+        }
     }
 
     /**
@@ -86,6 +88,8 @@ export class AudioMatrixRoute {
         }
 
         this.current = transfer.map(object => object);
-        this.onRouteChange(this.templateRouteName, [...this.current]);
+        if (this.onRouteChange) {
+            this.onRouteChange(this.templateRouteName, [...this.current]);
+        }
     }
 }
