@@ -1,0 +1,75 @@
+[
+  {
+    "file": "3H3P-LR-clicks-ffaac-640k.m4a",
+    "path": "Media",
+    "size": "54.29 MB",
+    "ambiorder": "T",
+    "routing": "so3h3p"
+  },
+  {
+    "file": "Globe-3h3p-BIS.webm",
+    "path": "Media",
+    "size": "54.29 MB",
+    "ambiorder": "T",
+    "routing": "so3h3p"
+  },
+  {
+    "file": "Globe-aac-3H3P.mp4",
+    "path": "Media",
+    "size": "39.45 MB",
+    "ambiorder": "T",
+    "routing": "so3h3p"
+  },
+  {
+    "file": "Globe-BIS-3H1P.webm",
+    "path": "Media",
+    "size": "19.33 MB",
+    "ambiorder": "T",
+    "routing": "so3h1p"
+  },
+  {
+    "file": "Globe-aac-3H1P.mp4",
+    "path": "Media",
+    "size": "26.32 MB",
+    "ambiorder": "T",
+    "routing": "so3h1p"
+  },
+  {
+    "file": "Song+Say-0123in6ch-channels.m4a",
+    "path": "Media",
+    "size": "2.94 MB",
+    "ambiorder": "F|S|T",
+    "routing": "linear",
+    "format": "AAC 4 channel FOA in 5.1 file that can be played also on iOS",
+    "description": "This is the...",
+    "license": "Free to use"
+  },
+  {
+    "file": "AMB8-Ascendo-256k.m4a",
+    "path": "Media",
+    "size": "3.93 MB",
+    "ambiorder": "T",
+    "routing": "so2h1p"
+  },
+  {
+    "file": "BIS-Eigenmike-256k_AMB8.m4a",
+    "path": "Media",
+    "size": "6.45 MB",
+    "ambiorder": "S",
+    "routing": "so2h1p"
+  },
+  {
+    "file": "AMB8-Gaudete-256k.m4a",
+    "path": "Media",
+    "size": "4.38 MB",
+    "ambiorder": "S",
+    "routing": "so2h1p"
+  },
+  {
+    "file": "AMB8-Rigoletto-256k.m4a",
+    "path": "Media",
+    "size": "2.94 MB",
+    "ambiorder": "S",
+    "routing": "so2h1p"
+  }
+]

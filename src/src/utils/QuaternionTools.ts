@@ -189,4 +189,20 @@ export default class QuaternionTools {
         // m20:6  m21:7  m22:8
         return mrot;
     }
+
+    /**
+     * Convert row to column major matrix 3x3
+     * @param matrix row-major matrix
+     * @returns column-major matrix
+     */
+    public static rowToColumnMajor(matrix: any) {
+        return [...matrix]
+        let rowm = [...matrix]
+        for (let i = 0; i < 3; ++i) {
+            for (let j = 0; j < 3; ++j){
+                rowm[ i * 3 + j ] = matrix[ j * 3 + i ];
+            }
+        }
+        return rowm;
+    }
 }

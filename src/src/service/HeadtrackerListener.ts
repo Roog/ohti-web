@@ -44,7 +44,8 @@ export default class HeadtrackerListener extends AspNetCoreHubListener {
             // Omnitone rotate soundfield with Matrix
             // Ambisonics.js rotate soundfield with Euler
             let qMtx = QuaternionTools.quaternionToMatrix(qRefComp);
-            AudioPlayer.getInstance().rotateSoundField(qMtx, null);
+            const rowor_to_col = QuaternionTools.rowToColumnMajor(qMtx);
+            AudioPlayer.getInstance().rotateSoundField(rowor_to_col, null);
 
             // Three.js Rotate 3D model
             requestAnimationFrame(function() {

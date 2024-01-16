@@ -204,7 +204,6 @@ canvas {
 }
 .ht-custom-btn {
     transition: all 100ms linear;
-    border: 4px solid #fff;
 }
 .ht-custom-btn--ble {
     width: 60px;
@@ -329,15 +328,25 @@ button, select {
     vertical-align: bottom;
     text-align: center;
     background: #d2eef3;
-    border: 1px solid #a4b0ca !important;
+    outline: none;
+    border: 1px solid #a4b0ca;
     color: black;
-    border: none;
     border-radius: 4px;
     box-shadow: inset 1px 1px 2px 0px #ffffff;
     outline: none;
     max-width: 100%;
     overflow: hidden;
     cursor: pointer;
+}
+button.template:disabled {
+    background: #370754;
+    border-color: #4c1daa;
+    box-shadow: inset 1px 1px 2px 0px #3f1cc8;
+    color: #7b35d4;
+}
+button.selected {
+    background-color: #9ced1f;
+    border-color: #61c33e;
 }
 select {
     margin: 0.4rem 0.4rem 0.4rem 0;
@@ -514,7 +523,9 @@ input[type="range"]:active::-moz-range-thumb {
 }
 
 #channel-selector input[type="radio"]:checked+label {
-  background-color: #d2eef3;
+    background-color: #d2eef3;
+    background-color: #9ced1f;
+    border-color: #61c33e;
 }
 
 #channel-selector input[type="radio"]:checked+label.silent {
@@ -524,6 +535,7 @@ input[type="range"]:active::-moz-range-thumb {
 /* Audio selector */
 .select-split {
     display: flex;
+    display: none;
 }
 
 .audio-selector {
@@ -538,6 +550,8 @@ ul#audio-dropdown-list {
     background: #280938;
     border-radius: 4px;
     border: 1px solid #3d0a58;
+    max-height: 200px;
+    overflow-y: scroll;
 }
 .audio-selector #audio-dropdown-list li {
     border-bottom: 1px solid #592177;
@@ -564,4 +578,13 @@ span.item-license {
     display: block;
     font-size: 0.8rem;
     pointer-events: none;
+}
+
+.video-player {
+    width: 100%;
+}
+
+.video-player video {
+    max-width: 100%;
+    width: 100%;
 }

@@ -32,7 +32,7 @@ export default class AudioFileDrop {
         $fileName.textContent = `Name: ${event.dataTransfer.files[0].name}`;
 
         const file = event.dataTransfer.files[0];
-        if (!file.type.match("audio.*")) {
+        if (!file.type.match("audio.*")||!file.type.match("video.*")) {
             $fileName.textContent = `ERROR! ${file.name} is not a valid audio file.`;
             return;
         } else {

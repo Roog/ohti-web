@@ -3,7 +3,9 @@ export default class Sound {
     public path: string;
     public size: string;
     public part: string;
-    public ambi_order: string;
+    /** F|S|T */
+    public ambiorder: string;
+    public routing: string;
     public format: string;
     public description: string;
     public license: string;
@@ -13,7 +15,8 @@ export default class Sound {
         this.path = data.path;
         this.size = data.size;
         this.part = data.part;
-        this.ambi_order = data.ambi_order;
+        this.ambiorder = data.ambiorder || data.ambi_order;
+        this.routing = data.routing;
         this.format = data.format;
         this.description = data.description;
         this.license = data.license;
