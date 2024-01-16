@@ -20,12 +20,12 @@ export default class AudioPlayer {
 
     private event: Events = new Events();
 
-    public audioContext: AudioContext = new AudioContext();
+    public audioContext: AudioContext; // = new AudioContext();
     public links?: Sound[];
 
     private audioRouteOutput: AudioMatrixRoute;
 
-    private audioElement: HTMLVideoElement = document.createElement("video");
+    private audioElement: HTMLVideoElement; // = document.createElement("video");
     private audioInputGain?: GainNode;
     private audioElementSource?: MediaElementAudioSourceNode;
 
@@ -95,10 +95,10 @@ export default class AudioPlayer {
         }
 
         // Create an AudioContext
-        // this.audioContext = new AudioContext();
+        this.audioContext = new AudioContext();
 
         // 1. Prepare audio element to feed the ambisonic source audio feed.
-        // this.audioElement = document.createElement("video"); //document.getElementById("audio-player") as HTMLAudioElement;
+        this.audioElement = document.createElement("video"); //document.getElementById("audio-player") as HTMLAudioElement;
         this.audioElement.loop = true;
         this.audioElement.crossOrigin = "anonymous";
         this.audioElement.src = this.links.length !== 0 ? `./${this.links[0].path}/${this.links[0].file}` : "";
