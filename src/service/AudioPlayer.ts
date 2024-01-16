@@ -615,8 +615,13 @@ export default class AudioPlayer {
 
         this.mergeChannels();
     }
-
+    /**
+     * @deprecated not to be used unless..
+     * @param decoder
+     * @returns
+     */
     private swapStereoChannels = (decoder: any) => {
+        return;
         if (!this.audioContext) {
             console.warn(`No audio context - can't swap channels`);
             return;
