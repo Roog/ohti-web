@@ -53,7 +53,7 @@ export default class Tools {
         }
     };
 
-    public static $dom = (id) => {
+    public static $dom = (id): any => {
         // if (this.elementNotAvailable.includes(id)) {
         //     return null;
         // }

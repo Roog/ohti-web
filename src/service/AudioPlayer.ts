@@ -1,33 +1,33 @@
 // import * as audioSources from "../content/soundlinks.json";
-import Tool from '../utils/Tools';
-import Sound from "../models/Sound";
-import ArrayUtil from "../utils/ArrayUtil";
-import Events from "../utils/Events";
+import Tool from '../utils/Tools.js';
+import Sound from "../models/Sound.js";
+import ArrayUtil from "../utils/ArrayUtil.js";
+import Events from "../utils/Events.js";
 // import Omnitone from 'omnitone/build/omnitone.min.esm.js';
 import Omnitone from "../custom-build/omnitone.esm.js";
-import NumberUtil from "../utils/NumberUtil";
-import { AudioRoute, AudioTemplateRoute } from "./AudioTemplateRoute";
-import { AudioMatrixRoute } from "./AudioMatrixRoute";
-import DOMUtil from "../utils/DOMUtil";
-import AudioFileDrop from "./AudioFileDrop";
-import { getFetching } from '../utils/FetcherUtil';
-import OmnitoneFOAHrirMagLsBase64 from '../hrirs/omnitone-foa-hrir-magls-base64';
-import OmnitoneSOAHrirMagLsBase64 from '../hrirs/omnitone-soa-hrir-magls-base64';
-import OmnitoneTOAHrirMagLsBase64 from '../hrirs/omnitone-toa-hrir-magls-base64';
-import { AudioHRIR, AudioHRIR_ToText } from './AudioHRIR';
+import NumberUtil from "../utils/NumberUtil.js";
+import { AudioRoute, AudioTemplateRoute } from "./AudioTemplateRoute.js";
+import { AudioMatrixRoute } from "./AudioMatrixRoute.js";
+import DOMUtil from "../utils/DOMUtil.js";
+import AudioFileDrop from "./AudioFileDrop.js";
+import { getFetching } from '../utils/FetcherUtil.js';
+import OmnitoneFOAHrirMagLsBase64 from '../hrirs/omnitone-foa-hrir-magls-base64.js';
+import OmnitoneSOAHrirMagLsBase64 from '../hrirs/omnitone-soa-hrir-magls-base64.js';
+import OmnitoneTOAHrirMagLsBase64 from '../hrirs/omnitone-toa-hrir-magls-base64.js';
+import { AudioHRIR, AudioHRIR_ToText } from './AudioHRIR.js';
 
 export default class AudioPlayer {
 
     private event: Events = new Events();
 
-    public audioContext: AudioContext;
-    public links: Sound[];
+    public audioContext: AudioContext = new AudioContext();
+    public links?: Sound[];
 
     private audioRouteOutput: AudioMatrixRoute;
 
-    private audioElement: HTMLVideoElement;
-    private audioInputGain: GainNode;
-    private audioElementSource: MediaElementAudioSourceNode;
+    private audioElement: HTMLVideoElement = document.createElement("video");
+    private audioInputGain?: GainNode;
+    private audioElementSource?: MediaElementAudioSourceNode;
 
     private ambisonicOrderNum: number = 2;
     private ambisonicMethod: AudioHRIR = AudioHRIR.magls;
@@ -78,7 +78,7 @@ export default class AudioPlayer {
                 option.setAttribute(`data-routing`, audio.routing);
                 option.setAttribute(`data-order`, audio.ambiorder);
                 option.text = audio.file;
-                selectListOfAudioFiles.appendChild(option);
+                selectListOfAudioFiles?.appendChild(option);
 
                 let liitem = document.createElement("li");
                 liitem.setAttribute("id", `R-${audio.file}`);
@@ -86,19 +86,19 @@ export default class AudioPlayer {
                 liitem.setAttribute(`data-routing`, audio.routing);
                 liitem.setAttribute(`data-order`, audio.ambiorder);
                 liitem.innerHTML = `<span class="item-title">${audio.file}</span> <span class="item-size">${audio.size ? audio.size : ''}</span> <span class="item-format">${audio.format ? audio.format : ''}</span> <span class="item-license">${audio.license ? audio.license : ''}</span>`;
-                itt.appendChild(liitem);
+                itt?.appendChild(liitem);
             });
             console.log(this.links, audioSources);
         } catch(error) {
             console.log(`Error parsing soundfiles`, error);
-            throw new Error(error);
+            throw new Error(`${error}`);
         }
 
         // Create an AudioContext
-        this.audioContext = new AudioContext();
+        // this.audioContext = new AudioContext();
 
         // 1. Prepare audio element to feed the ambisonic source audio feed.
-        this.audioElement = document.createElement("video"); //document.getElementById("audio-player") as HTMLAudioElement;
+        // this.audioElement = document.createElement("video"); //document.getElementById("audio-player") as HTMLAudioElement;
         this.audioElement.loop = true;
         this.audioElement.crossOrigin = "anonymous";
         this.audioElement.src = this.links.length !== 0 ? `./${this.links[0].path}/${this.links[0].file}` : "";
@@ -147,7 +147,7 @@ export default class AudioPlayer {
 
         console.log({ element: this.audioElement });
 
-        document.getElementById("audioPlayerContainer").append(this.audioElement);
+        document.getElementById("audioPlayerContainer")!.append(this.audioElement);
 
         // 2. Create media element source
         this.audioElementSource = this.audioContext.createMediaElementSource(this.audioElement);
@@ -177,7 +177,7 @@ export default class AudioPlayer {
             // Enable this to play out as it is
             // this.decoderFOA.output.connect(this.audioContext.destination);
         },
-        function (onInitializationError) {
+        function (onInitializationError: any) {
             console.error(onInitializationError);
         });
 
@@ -196,7 +196,7 @@ export default class AudioPlayer {
             // Enable this to play out as it is
             // this.magDecoderFOA.output.connect(this.audioContext.destination);
         },
-        function (onInitializationError) {
+        function (onInitializationError: any) {
             console.error(onInitializationError);
         });
 
@@ -216,7 +216,7 @@ export default class AudioPlayer {
             // Enable this to play out as it is
             // this.decoderSOA.output.connect(this.audioContext.destination);
         },
-        function (onInitializationError) {
+        function (onInitializationError: any) {
             console.error(onInitializationError);
         });
 
@@ -235,7 +235,7 @@ export default class AudioPlayer {
             // Enable this to play out as it is
             // this.magDecoderSOA.output.connect(this.audioContext.destination);
         },
-        function (onInitializationError) {
+        function (onInitializationError: any) {
             console.error(onInitializationError);
         });
 
@@ -253,7 +253,7 @@ export default class AudioPlayer {
             // Enable this to play out as it is
             // this.decoderTOA.output.connect(this.audioContext.destination);
         },
-        function (onInitializationError) {
+        function (onInitializationError: any) {
             console.error(onInitializationError);
         });
 
@@ -272,7 +272,7 @@ export default class AudioPlayer {
             // Enable this to play out as it is
             // this.magDecoderTOA.output.connect(this.audioContext.destination);
         },
-        function (onInitializationError) {
+        function (onInitializationError: any) {
             console.error(onInitializationError);
         });
 
@@ -296,10 +296,13 @@ export default class AudioPlayer {
         // ========
         // Add audio file drop and selector
         Tool.$dom("inputCustomAudioFile").onchange = function(this: HTMLInputElement) {
+            if (!this.files) {
+                return;
+            }
             console.log("Input custom file: ", this.files[0]);
             let file = this.files[0];
             if (file.type.match("audio.*")) {
-                document.getElementById("txtLoadedAudioFile").innerText = `${file.name} (${file.type})`;
+                document.getElementById("txtLoadedAudioFile")!.innerText = `${file.name} (${file.type})`;
                 self.audioElement.src = window.URL.createObjectURL(file);
             } else {
                 alert("Not an audio file");
@@ -323,7 +326,7 @@ export default class AudioPlayer {
             }
         };
 
-        Tool.$event("audio-dropdown-list", "click", function(event) {
+        Tool.$event("audio-dropdown-list", "click", function(event: any) {
             console.log("Loading selected item: ", { ev: event.target.dataset });
             console.log({ elem: self.audioElement });
 
@@ -388,7 +391,7 @@ export default class AudioPlayer {
         // Setting Headtrack reference
         Tool.$event(window, "htsetreference", (e: any) => {
 
-            let dataset = document.querySelectorAll("[data-key]");
+            let dataset = document.querySelectorAll("[data-key]") as NodeListOf<HTMLElement>;
             dataset.forEach(function(item: HTMLElement) {
 
                 if (e.detail.hasOwnProperty("htReference")) {
@@ -457,7 +460,7 @@ export default class AudioPlayer {
         const hrirBtn = document.querySelectorAll("[data-hrir]");
         console.log("HRIR buttons:", hrirBtn);
         Array.from(hrirBtn).forEach((element) => {
-            Tool.$event(element, "click", (event) => {
+            Tool.$event(element, "click", (event: any) => {
                 const action = event.target.dataset.hrir;
                 if (action) {
                     console.log(`Audio HRIR '${action}'`);
@@ -471,7 +474,7 @@ export default class AudioPlayer {
         const templateBtn = document.querySelectorAll("[data-template]");
         console.log("Template buttons:", templateBtn);
         Array.from(templateBtn).forEach((element) => {
-            Tool.$event(element, "click", (event) => {
+            Tool.$event(element, "click", (event: any) => {
                 const action = event.target.dataset.template;
                 if (action) {
                     console.log(`Audio matrix template '${action}'`);
@@ -485,7 +488,7 @@ export default class AudioPlayer {
         const gainTemplateBtn = document.querySelectorAll("[data-input-gain]");
         console.log("Gain template buttons:", gainTemplateBtn);
         Array.from(gainTemplateBtn).forEach((element) => {
-            Tool.$event(element, "click", (event) => {
+            Tool.$event(element, "click", (event: any) => {
                 const action = event.target.dataset.inputGain as number;
                 if (action) {
                     let dat = NumberUtil.decibelToGain(action);
@@ -504,7 +507,7 @@ export default class AudioPlayer {
      */
     private onAudioGainChanged = (gain: number) => {
         console.log(`Audio Gain '${gain}'`);
-        const allBtns = document.querySelectorAll(`button.gain`);
+        const allBtns = document.querySelectorAll(`button.gain`) as NodeListOf<HTMLButtonElement>;
         if (allBtns) {
             allBtns.forEach((el: HTMLButtonElement) => {
                 el.classList.remove('selected')
@@ -522,7 +525,7 @@ export default class AudioPlayer {
      */
     private onAudioRouteChange = (template: AudioTemplateRoute, route: AudioRoute) => {
         console.log(`Audio matrix template '${template}' routed`);
-        const allBtns = document.querySelectorAll(`button.template`);
+        const allBtns = document.querySelectorAll(`button.template`) as NodeListOf<HTMLButtonElement>;
         if (allBtns) {
             allBtns.forEach((el: HTMLButtonElement) => {
                 el.classList.remove('selected')
@@ -539,7 +542,7 @@ export default class AudioPlayer {
      */
     private onFilterMethodChange = (method: AudioHRIR) => {
         console.log(`Audio HRIR method '${method}'`);
-        const allBtns = document.querySelectorAll(`button.hrir`);
+        const allBtns = document.querySelectorAll(`button.hrir`) as NodeListOf<HTMLButtonElement>;;
         if (allBtns) {
             allBtns.forEach((el: HTMLButtonElement) => {
                 el.classList.remove('selected')
@@ -606,7 +609,7 @@ export default class AudioPlayer {
         }
         group.append(row);
 
-        const container = Tool.$dom("channel-selector");
+        const container = Tool.$dom("channel-selector")!;
         DOMUtil.removeAllChildNodes(container);
         container.appendChild(group);
 
@@ -614,6 +617,10 @@ export default class AudioPlayer {
     }
 
     private swapStereoChannels = (decoder: any) => {
+        if (!this.audioContext) {
+            console.warn(`No audio context - can't swap channels`);
+            return;
+        }
         const splitterChSwap = this.audioContext.createChannelSplitter(2);
         const mergerChSwap = this.audioContext.createChannelMerger(2);
         // connect the merger to the destination
@@ -810,7 +817,7 @@ export default class AudioPlayer {
         }
     }
 
-    toggleAudioPlayback = (event) => {
+    toggleAudioPlayback = (event: any) => {
 
         this.mergeChannels();
         try {
