@@ -20,12 +20,12 @@ export default class AudioPlayer {
 
     private event: Events = new Events();
 
-    public audioContext: AudioContext = new AudioContext();
+    public audioContext: AudioContext; // = new AudioContext();
     public links?: Sound[];
 
     private audioRouteOutput: AudioMatrixRoute;
 
-    private audioElement: HTMLVideoElement = document.createElement("video");
+    private audioElement: HTMLVideoElement; // = document.createElement("video");
     private audioInputGain?: GainNode;
     private audioElementSource?: MediaElementAudioSourceNode;
 
@@ -95,10 +95,10 @@ export default class AudioPlayer {
         }
 
         // Create an AudioContext
-        // this.audioContext = new AudioContext();
+        this.audioContext = new AudioContext();
 
         // 1. Prepare audio element to feed the ambisonic source audio feed.
-        // this.audioElement = document.createElement("video"); //document.getElementById("audio-player") as HTMLAudioElement;
+        this.audioElement = document.createElement("video"); //document.getElementById("audio-player") as HTMLAudioElement;
         this.audioElement.loop = true;
         this.audioElement.crossOrigin = "anonymous";
         this.audioElement.src = this.links.length !== 0 ? `./${this.links[0].path}/${this.links[0].file}` : "";
@@ -173,9 +173,9 @@ export default class AudioPlayer {
             let state = this.ambisonicOrderNum === 0 && this.ambisonicMethod === AudioHRIR.google ? "ambisonic" : "off";
             this.decoderFOA.setRenderingMode(state);
             // Swap left and right channel
-            this.swapStereoChannels(this.decoderFOA);
+            // this.swapStereoChannels(this.decoderFOA);
             // Enable this to play out as it is
-            // this.decoderFOA.output.connect(this.audioContext.destination);
+            this.decoderFOA.output.connect(this.audioContext.destination);
         },
         function (onInitializationError: any) {
             console.error(onInitializationError);
@@ -192,9 +192,9 @@ export default class AudioPlayer {
             let state = this.ambisonicOrderNum === 0 && this.ambisonicMethod === AudioHRIR.magls ? "ambisonic" : "off";
             this.magDecoderFOA.setRenderingMode(state);
             // Swap left and right channel
-            this.swapStereoChannels(this.magDecoderFOA);
+            // this.swapStereoChannels(this.magDecoderFOA);
             // Enable this to play out as it is
-            // this.magDecoderFOA.output.connect(this.audioContext.destination);
+            this.magDecoderFOA.output.connect(this.audioContext.destination);
         },
         function (onInitializationError: any) {
             console.error(onInitializationError);
@@ -212,9 +212,9 @@ export default class AudioPlayer {
             let state = this.ambisonicOrderNum === 1 && this.ambisonicMethod === AudioHRIR.google ? "ambisonic" : "off";
             this.decoderSOA.setRenderingMode(state);
             // Swap left and right channel
-            this.swapStereoChannels(this.decoderSOA);
+            // this.swapStereoChannels(this.decoderSOA);
             // Enable this to play out as it is
-            // this.decoderSOA.output.connect(this.audioContext.destination);
+            this.decoderSOA.output.connect(this.audioContext.destination);
         },
         function (onInitializationError: any) {
             console.error(onInitializationError);
@@ -231,9 +231,9 @@ export default class AudioPlayer {
             let state = this.ambisonicOrderNum === 1 && this.ambisonicMethod === AudioHRIR.magls ? "ambisonic" : "off";
             this.magDecoderSOA.setRenderingMode(state);
             // Swap left and right channel
-            this.swapStereoChannels(this.magDecoderSOA);
+            // this.swapStereoChannels(this.magDecoderSOA);
             // Enable this to play out as it is
-            // this.magDecoderSOA.output.connect(this.audioContext.destination);
+            this.magDecoderSOA.output.connect(this.audioContext.destination);
         },
         function (onInitializationError: any) {
             console.error(onInitializationError);
@@ -249,9 +249,9 @@ export default class AudioPlayer {
             let state = this.ambisonicOrderNum === 2 && this.ambisonicMethod === AudioHRIR.google ? "ambisonic" : "off";
             this.decoderTOA.setRenderingMode(state);
             // Swap left and right channel
-            this.swapStereoChannels(this.decoderTOA);
+            // this.swapStereoChannels(this.decoderTOA);
             // Enable this to play out as it is
-            // this.decoderTOA.output.connect(this.audioContext.destination);
+            this.decoderTOA.output.connect(this.audioContext.destination);
         },
         function (onInitializationError: any) {
             console.error(onInitializationError);
@@ -268,9 +268,9 @@ export default class AudioPlayer {
             let state = this.ambisonicOrderNum === 2 && this.ambisonicMethod === AudioHRIR.magls ? "ambisonic" : "off";
             this.magDecoderTOA.setRenderingMode(state);
             // Swap left and right channel
-            this.swapStereoChannels(this.magDecoderTOA);
+            // this.swapStereoChannels(this.magDecoderTOA);
             // Enable this to play out as it is
-            // this.magDecoderTOA.output.connect(this.audioContext.destination);
+            this.magDecoderTOA.output.connect(this.audioContext.destination);
         },
         function (onInitializationError: any) {
             console.error(onInitializationError);
@@ -615,8 +615,13 @@ export default class AudioPlayer {
 
         this.mergeChannels();
     }
-
+    /**
+     * @deprecated not to be used unless..
+     * @param decoder
+     * @returns
+     */
     private swapStereoChannels = (decoder: any) => {
+        return;
         if (!this.audioContext) {
             console.warn(`No audio context - can't swap channels`);
             return;

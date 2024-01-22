@@ -129,7 +129,7 @@ export default class QuaternionTools {
         return angles;
     }
 
-    public static toMatrixAsWiki(q) {
+    public static toMatrixAsWikiOld(q) {
         // 1-2y²-2z²    2xy-2zw    2xz+2yw
         // 2xy+2zw      1-2x²-2z²  2yz-2xw
         // 2xz-2yw      2yz+2xw    1-2x²-2y²
@@ -151,6 +151,38 @@ export default class QuaternionTools {
         mt[6] = (2.0 * q_x * q_z) - (2.0 * q_y * q_w);
         mt[7] = (2.0 * q_y * q_z) + (2.0 * q_x * q_w);
         mt[8] = (1.0 - 2.0 * (q_x * q_x) - 2.0 * (q_y * q_y));
+
+        return mt;
+    }
+
+    public static toMatrixAsWiki(q) {
+        // 1-2y²-2z²    2xy-2zw    2xz+2yw
+        // 2xy+2zw      1-2x²-2z²  2yz-2xw
+        // 2xz-2yw      2yz+2xw    1-2x²-2y²
+        let q_w = q[0];
+        let q_x = q[1];
+        let q_y = q[2];
+        let q_z = q[3];
+
+        let mt = new Float32Array(9);
+        // q: w0, x1, y2, z3
+
+        // New set of equations, added on 14/01/24 by Stefan Schreiber
+
+        mt[0] = 2.0 * (q_w * q_w) + 2.0 * (q_x * q_x) - 1;
+        mt[1] = 2.0 * q_x * q_y - 2.0 * q_w * q_z;
+        // identical to above, suggesting different order of quaternion factors w and z
+        mt[2] = 2.0 * q_x * q_z + 2.0 * q_w * q_y;
+
+        mt[3] = 2.0 * q_x * q_y + 2.0 * q_w * q_z;
+        mt[4] = 2.0 * q_w * q_w + 2.0 * q_y * q_y -1;
+        // Changed 2nd equation
+        mt[5] = 2.0 * q_y * q_z - 2.0 * q_w * q_x;
+
+        mt[6] = 2.0 * q_x * q_z - 2.0 * q_w * q_y;
+        mt[7] = 2.0 * q_y * q_z + 2.0 * q_w * q_z;
+        mt[8] = 2.0 * q_w * q_w + 2.0 * q_z * q_z - 1;
+        // Changed 3rd equation
 
         return mt;
     }
